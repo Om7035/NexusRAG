@@ -25,3 +25,6 @@ numpy>=1.24.0  # For numerical operations
 # Retrieval engine dependencies
 qdrant-client>=1.9.0  # For Qdrant vector database
 bm25s>=0.1.0  # For BM25 keyword search
+# Generation and reasoning dependencies
+lmql>=0.0.6  # For constrained generation
+vllm>=0.2.0  # For high-performance inference

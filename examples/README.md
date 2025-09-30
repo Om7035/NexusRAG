@@ -64,6 +64,21 @@ export GEMINI_API_KEY="your-google-ai-key"
 python examples/free_api_example.py
 ```
 
+## Generation & Reasoning Example
+
+The [generation_reasoning_example.py](generation_reasoning_example.py) script demonstrates the enhanced generation and reasoning capabilities of NexusRAG:
+
+- Local LLM orchestration
+- Multi-step reasoning
+- Citation & verification
+- Constrained generation
+
+To run this example:
+
+```bash
+python examples/generation_reasoning_example.py
+```
+
 ## Retrieval Engine Example
 
 The [retrieval_example.py](retrieval_example.py) script demonstrates the enhanced retrieval engine capabilities of NexusRAG:
