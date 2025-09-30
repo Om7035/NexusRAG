@@ -266,15 +266,6 @@ The current implementation includes:
 5. **Entity Search**: Search functionality for finding entities by name
 6. **Integration with Pipeline**: Enhanced pipeline that automatically builds knowledge graphs
 
-### Future Enhancements
-
-Planned knowledge graph features include:
-
-1. **Cross-Document Linking**: Connecting entities across multiple documents
-2. **Enhanced Reasoning**: Using knowledge graphs for more sophisticated question answering
-3. **Graph-Based Retrieval**: Retrieving information based on entity relationships
-4. **Advanced NLP Processing**: More sophisticated entity and relationship extraction
-
 ### Usage Example
 
 ```python
@@ -295,11 +286,111 @@ if pipeline.knowledge_graph:
     entities = pipeline.knowledge_graph.search_entities("Apple")
     print(f"Found {len(entities)} entities matching 'Apple'")
 
-# Ask questions with knowledge graph enhancement (future feature)
+# Ask questions with knowledge graph enhancement
 answer = pipeline.ask(
     "How are these companies related?",
     use_knowledge_graph=True
 )
+```
+
+## Agentic Features
+
+NexusRAG now includes basic agentic capabilities with multi-step reasoning.
+
+### Current Implementation
+
+The current implementation includes:
+
+1. **BasicAgent**: Agent with reasoning and tool usage capabilities
+2. **Multi-step Reasoning**: Iterative refinement of answers
+3. **Memory Management**: Storage and retrieval of reasoning steps
+4. **Tool Integration**: Extensible tool system
+
+### Usage Example
+
+```python
+from nexusrag.enhanced_pipeline import EnhancedRAGPipeline
+
+# Initialize pipeline with agent support
+pipeline = EnhancedRAGPipeline(parser, embedder, vector_store, llm)
+
+# Process documents
+pipeline.process_documents(["doc1.pdf", "doc2.pdf"])
+
+# Ask questions with multi-step reasoning
+answer = pipeline.ask_with_reasoning(
+    "Compare the leadership changes at these companies",
+    max_steps=3
+)
+print(answer)
+```
+
+## Advanced Document Parsing
+
+NexusRAG includes advanced document parsing capabilities with layout analysis.
+
+### Current Implementation
+
+The current implementation includes:
+
+1. **AdvancedPDFParser**: PDF parser with layout analysis
+2. **Structured Content Extraction**: Preservation of document hierarchy
+3. **Image Detection**: Identification of image blocks
+4. **Metadata Preservation**: Detailed metadata for each content block
+
+### Usage Example
+
+```python
+from nexusrag.parsers.advanced_pdf import AdvancedPDFParser
+
+# Initialize advanced PDF parser
+parser = AdvancedPDFParser()
+
+# Parse PDF with layout analysis
+documents = parser.parse("document.pdf")
+
+# Access detailed metadata
+for doc in documents:
+    print(f"Page: {doc.metadata['page']}")
+    print(f"Block type: {doc.metadata['block_type']}")
+    print(f"Content: {doc.content[:100]}...")
+```
+
+## Table Processing
+
+NexusRAG includes table processing capabilities for structured data extraction.
+
+### Current Implementation
+
+The current implementation includes:
+
+1. **TableProcessor**: Extracts tables from documents
+2. **Structured Data Conversion**: Converts to pandas DataFrames
+3. **Delimiter Detection**: Handles various table formats
+4. **Metadata Preservation**: Preserves table source information
+
+### Usage Example
+
+```python
+from nexusrag.processors.table_processor import TableProcessor
+from nexusrag.parsers.base import Document
+
+# Initialize table processor
+table_processor = TableProcessor()
+
+# Create a document with table-like content
+doc = Document(
+    content="| Name | Age | City |\n|------|-----|------|\n| John | 30  | NYC  |",
+    metadata={"source": "sample"}
+)
+
+# Extract tables
+tables = table_processor.extract_tables(doc)
+
+# Convert to structured format
+if tables:
+    df = table_processor.convert_to_structured(tables[0]['data'])
+    print(df)
 ```
 
 ## Performance Considerations

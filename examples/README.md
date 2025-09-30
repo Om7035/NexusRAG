@@ -64,6 +64,22 @@ export GEMINI_API_KEY="your-google-ai-key"
 python examples/free_api_example.py
 ```
 
+## Comprehensive Example
+
+The [comprehensive_example.py](comprehensive_example.py) script demonstrates all advanced features of NexusRAG:
+
+- Advanced document parsing with layout analysis
+- Knowledge graph with entity extraction
+- Multi-step reasoning capabilities
+- Table processing
+- Local LLM support via Ollama
+
+To run this example:
+
+```bash
+python examples/comprehensive_example.py
+```
+
 ## Ollama Example
 
 The [ollama_example.py](ollama_example.py) script demonstrates how to use Ollama for local LLM processing:

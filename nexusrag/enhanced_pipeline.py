@@ -7,6 +7,7 @@ from .chunking import DocumentChunker
 from .metadata_filter import MetadataFilter
 from .multimodal import MultimodalProcessor
 from .knowledge_graph import KnowledgeGraphBuilder, KnowledgeGraph
+from .agents.basic_agent import BasicAgent
 
 
 class EnhancedRAGPipeline:
@@ -40,6 +41,9 @@ class EnhancedRAGPipeline:
         self.multimodal_processor = MultimodalProcessor()
         self.knowledge_graph_builder = KnowledgeGraphBuilder()
         self.knowledge_graph: Optional[KnowledgeGraph] = None
+        
+        # Initialize agent
+        self.agent = BasicAgent(llm, vector_store)
         
     def process_document(self, file_path: str, chunk: bool = True) -> None:
         """Process a document file and add it to the vector store.
@@ -127,6 +131,18 @@ class EnhancedRAGPipeline:
         # Generate answer using LLM
         answer = self.llm.generate(question, context)
         return answer
+    
+    def ask_with_reasoning(self, question: str, max_steps: int = 3) -> str:
+        """Ask a question with multi-step reasoning.
+        
+        Args:
+            question (str): Question to ask
+            max_steps (int): Maximum number of reasoning steps
+            
+        Returns:
+            str: Answer to the question
+        """
+        return self.agent.think(question, max_steps)
     
     def _enhance_context_with_knowledge_graph(self, context: List[Dict[str, Any]], question: str) -> List[Dict[str, Any]]:
         """Enhance context with knowledge graph information.
