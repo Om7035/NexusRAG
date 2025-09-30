@@ -1,176 +1,220 @@
-# NexusRAG
+# NexusRAG - The "It Just Works" RAG Framework
 
-NexusRAG is an open-source framework for building autonomous AI agents that reason over complex, multimodal data. It combines high-fidelity document parsing with a fully modular architecture, enabling developers to create powerful, data-aware applications.
+NexusRAG is an open-source framework that works out of the box but is highly customizable. It combines high-fidelity document parsing with advanced reasoning capabilities to create powerful, data-aware applications.
 
-## Features
+## 🚀 Quick Start - "It Just Works" Experience
 
-- **Multimodal Parsing**: High-fidelity extraction from PDFs, Word documents, HTML, Markdown, and other formats
-- **Modular Design**: Pluggable components for parsers, embedders, vector stores, and LLMs
-- **Agent-Ready**: Built for creating autonomous AI agents that can reason over complex data
-- **Extensible**: Easy to add new components and customize existing ones
-- **Multiple Providers**: Support for OpenAI, Cohere, Pinecone, Weaviate, Anthropic, Google Gemini, and more
-- **Free API Support**: Built-in support for free APIs like Google Gemini
-- **Local LLM Support**: Built-in support for local LLMs via Ollama
-- **Knowledge Graph**: Entity extraction and relationship mapping
-- **Advanced Features**: Document chunking, metadata filtering, and multimodal processing
-
-## Architecture
-
-NexusRAG follows a modular architecture with several key components:
-
-1. **Parsers**: Extract content and metadata from documents (PDF, Word, HTML, Markdown, Text)
-2. **Embedders**: Convert text into numerical embeddings (Sentence Transformers, OpenAI, Cohere, Google Gemini)
-3. **Vector Stores**: Store and retrieve embeddings efficiently (Chroma, Pinecone, Weaviate)
-4. **LLMs**: Generate responses based on prompts and context (Hugging Face, OpenAI, Anthropic, Google Gemini, Ollama)
-5. **Chunking**: Break large documents into smaller, manageable pieces
-6. **Metadata Filtering**: Filter documents based on metadata criteria
-7. **Multimodal Processing**: Handle text, images, and tables within documents
-
-These components are orchestrated by the **Pipeline**, which provides a unified interface for processing documents and answering questions.
-
-## Installation
-
-### Prerequisites
-
-- Python 3.8 or higher
-- pip (Python package installer)
-
-### Installation Steps
-
-1. Clone the repository:
+### Option 1: One-Command Docker Setup
 
 ```bash
+# Clone and run everything with one command
 git clone https://github.com/Om7035/NexusRAG.git
 cd NexusRAG
+docker-compose up
+
+# Open http://localhost:8501 in your browser
 ```
 
-2. Create a virtual environment (recommended):
+### Option 2: CLI Usage
 
 ```bash
-python -m venv venv
-# On Windows:
-venv\Scripts\activate
-# On macOS/Linux:
-source venv/bin/activate
+# Install NexusRAG
+pip install nexusrag
+
+# Process documents
+nexusrag process document.pdf document.docx
+
+# Ask questions
+nexusrag ask "What is this document about?"
 ```
 
-3. Install the package in development mode:
-
-```bash
-pip install -e .
-```
-
-This will install all dependencies specified in `pyproject.toml`.
-
-## Quickstart
-
-### Using the Streamlit Demo
-
-NexusRAG includes an advanced Streamlit demo application that you can run locally:
-
-```bash
-streamlit run app.py
-```
-
-This will start a web server where you can upload multiple document types and ask questions about them.
-
-### Using the Python API
+### Option 3: Python Library
 
 ```python
-from nexusrag.enhanced_pipeline import EnhancedRAGPipeline
-from nexusrag.parsers.universal import UniversalParser
-from nexusrag.embedders.universal import UniversalEmbedder
-from nexusrag.vectorstores.universal import UniversalVectorStore
-from nexusrag.llms.universal import UniversalLLM
+from nexusrag import RAG
 
-# Initialize components
-parser = UniversalParser()
-embedder = UniversalEmbedder(provider="sentence-transformers")
-vector_store = UniversalVectorStore(provider="chroma")
-llm = UniversalLLM(provider="huggingface")
+# Initialize RAG
+rag = RAG()
 
-# Initialize the enhanced pipeline
-pipeline = EnhancedRAGPipeline(
-    parser=parser,
-    embedder=embedder,
-    vector_store=vector_store,
-    llm=llm,
-    chunk_size=1000,
-    chunk_overlap=200
+# Process documents
+rag.process(["document.pdf", "document.docx"])
+
+# Ask questions
+answer = rag.ask("What is this document about?")
+print(answer)
+```
+
+## 🌟 Key Features
+
+### Multiple Usage Patterns
+- **Ready-to-use application**: `docker-compose up` → works!
+- **Python library**: `from nexusrag import RAG`
+- **REST API**: For web apps/mobile apps
+- **CLI tool**: `nexusrag query "your question"`
+
+### Advanced Capabilities
+- **Multimodal Processing**: Text, PDF, images, audio, video, tables
+- **Smart Chunking**: Character, semantic, and sentence-based strategies
+- **Hybrid Search**: Vector + keyword search with re-ranking
+- **Multi-Step Reasoning**: Iterative refinement with citations
+- **Local LLM Support**: Full Ollama integration
+- **Configurable Components**: Swap models, databases, and processors
+
+## 📦 Installation
+
+### Prerequisites
+- Python 3.8 or higher
+- Docker (for one-command deployment)
+
+### Quick Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/Om7035/NexusRAG.git
+cd NexusRAG
+
+# Install with pip
+pip install -e .
+
+# Or install with all dependencies
+pip install -e .[all]
+```
+
+## 🛠️ Usage Patterns
+
+### 1. Web Application
+
+```bash
+# Run the Streamlit web app
+streamlit run app.py
+
+# Or with Docker
+docker-compose up
+```
+
+### 2. Python Library
+
+```python
+from nexusrag import RAG
+
+# Initialize with default settings
+rag = RAG()
+
+# Or configure components
+rag = RAG(
+    embedder="sentence-transformers",
+    vector_store="chroma",
+    llm="ollama"
 )
 
 # Process documents
-pipeline.process_documents(["path/to/your/document.pdf", "path/to/your/document.docx"])
+rag.process(["document1.pdf", "document2.docx"])
 
-# Ask questions about the documents
-answer = pipeline.ask("What is this document about?")
+# Ask questions
+answer = rag.ask("Summarize the key points")
 print(answer)
-
-# Ask questions with metadata filtering
-filtered_answer = pipeline.ask(
-    "What is this document about?",
-    filter_metadata={"content_type": "paragraph"}
-)
-print(filtered_answer)
 ```
 
-## Components
+### 3. Command Line Interface
 
-### Parsers
+```bash
+# Process documents
+nexusrag process document.pdf document.docx
 
-- `UniversalParser`: Automatically detects file type and uses appropriate parser
-- `PDFParser`: Extracts text and tables from PDF documents
-- `WordParser`: Extracts text and tables from Word documents
-- `HTMLParser`: Extracts text from HTML documents
-- `MarkdownParser`: Extracts text from Markdown documents
-- `TextParser`: Extracts text from plain text files
+# Ask questions
+nexusrag ask "What is the main topic?"
 
-### Embedders
+# Show configuration
+nexusrag config
 
-- `UniversalEmbedder`: Supports multiple embedding providers
-- `SentenceTransformerEmbedder`: Uses pre-trained models from Sentence Transformers
-- `OpenAIEmbedder`: Uses OpenAI's embedding models
-- `CohereEmbedder`: Uses Cohere's embedding models
-- `GeminiEmbedder`: Uses Google Gemini's embedding models
+# Get version
+nexusrag version
+```
 
-### Vector Stores
+### 4. REST API
 
-- `UniversalVectorStore`: Supports multiple vector store providers
-- `ChromaVectorStore`: Uses ChromaDB for storage and retrieval
-- `PineconeVectorStore`: Uses Pinecone for storage and retrieval
-- `WeaviateVectorStore`: Uses Weaviate for storage and retrieval
+```bash
+# Start the API server
+nexusrag serve --port 8000
 
-### LLMs
+# Process documents (POST /process)
+curl -X POST http://localhost:8000/process \
+  -F "files=@document.pdf"
 
-- `UniversalLLM`: Supports multiple LLM providers
-- `HuggingFaceLLM`: Uses models from Hugging Face
-- `OpenAILLM`: Uses OpenAI's language models
-- `AnthropicLLM`: Uses Anthropic's language models
-- `GeminiLLM`: Uses Google Gemini's language models
-- `OllamaLLM`: Uses local LLMs via Ollama
+# Ask questions (POST /ask)
+curl -X POST http://localhost:8000/ask \
+  -H "Content-Type: application/json" \
+  -d '{"question": "What is this about?"}'
+```
 
-### Advanced Features
+## ⚙️ Configuration
 
-- **Document Chunking**: Break large documents into smaller pieces
-- **Metadata Filtering**: Filter documents based on metadata criteria
-- **Multimodal Processing**: Handle text, images, and tables within documents
+NexusRAG uses a simple YAML configuration system:
 
-## Examples
+```yaml
+# nexusrag.yaml
+pipeline:
+  chunk_size: 1000
+  chunk_overlap: 200
+
+components:
+  embedder:
+    type: sentence-transformers
+    model: all-MiniLM-L6-v2
+  
+  vector_store:
+    type: chroma
+    collection_name: nexusrag
+  
+  llm:
+    type: ollama
+    model: llama2
+```
+
+## 🧩 Modular Architecture
+
+NexusRAG follows a modular architecture that makes it easy to extend:
+
+1. **Document Processing Layer**: Universal file loader, smart chunking, metadata extraction
+2. **Multi-Modal Understanding Layer**: Image understanding, audio/video transcription, table comprehension
+3. **Retrieval Engine Layer**: Hybrid search, re-ranking, cross-modal retrieval
+4. **Generation & Reasoning Layer**: Local LLM orchestration, multi-step reasoning, citation & verification
+
+## 📚 Examples
 
 See the [examples](examples/) directory for detailed usage examples:
 
-- [Basic Usage](examples/basic_usage.py): Simple example with default components
-- [Advanced Usage](examples/advanced_usage.py): Example with all advanced features
-- [Custom Components](examples/custom_components.py): Example of creating custom components
+- [Document Processing](examples/document_processing_example.py)
+- [Multimodal Understanding](examples/multimodal_example.py)
+- [Retrieval Engine](examples/retrieval_example.py)
+- [Generation & Reasoning](examples/generation_reasoning_example.py)
 
-## Documentation
+## 🤝 Contributing
 
-For more detailed information, please see the [documentation](docs/).
+We welcome contributions! Please see our [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
-## Contributing
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
 
-We welcome contributions! Please see our [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to get started.
-
-## License
+## 📄 License
 
 This project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details.
+
+## 🎯 Why NexusRAG?
+
+NexusRAG is designed to be:
+
+- **Easy to use**: "It just works" out of the box
+- **Highly customizable**: Modular architecture for advanced users
+- **Production ready**: Docker deployment, configuration management
+- **Community friendly**: Clear contribution guidelines, good documentation
+
+Compared to other RAG frameworks, NexusRAG offers:
+- More advanced multi-modal capabilities
+- Sophisticated reasoning with citations
+- Local LLM support with Ollama
+- Comprehensive evaluation tools
+- Better documentation and examples

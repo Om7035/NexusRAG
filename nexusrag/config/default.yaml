@@ -1,0 +1,42 @@
+# NexusRAG Default Configuration
+
+# Pipeline settings
+pipeline:
+  chunk_size: 1000
+  chunk_overlap: 200
+  top_k: 5
+
+# Component defaults
+components:
+  parser:
+    type: universal
+  
+  embedder:
+    type: sentence-transformers
+    model: all-MiniLM-L6-v2
+  
+  vector_store:
+    type: chroma
+    collection_name: nexusrag
+  
+  llm:
+    type: huggingface
+    model: google/flan-t5-base
+
+# Advanced features
+advanced:
+  enable_metadata_filtering: true
+  enable_multimodal_processing: true
+  enable_knowledge_graph: true
+  enable_reasoning: true
+
+# Logging
+logging:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# Performance
+performance:
+  cache_enabled: true
+  cache_size: 1000
+  batch_size: 32

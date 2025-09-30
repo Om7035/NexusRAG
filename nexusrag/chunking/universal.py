@@ -1,7 +1,6 @@
 from typing import List
 from ..parsers.base import Document
-# Import DocumentChunker directly from its module to avoid circular imports
-from ..chunking import DocumentChunker
+from .document_chunker import DocumentChunker
 from .semantic import SemanticChunker
 from .sentence import SentenceChunker
 

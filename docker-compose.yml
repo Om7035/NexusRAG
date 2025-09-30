@@ -1,13 +1,56 @@
 version: '3.8'
 
 services:
-  nexusrag:
+  # Main NexusRAG web application
+  nexusrag-web:
     build: .
     ports:
       - "8501:8501"
     volumes:
       - ./data:/app/data
+      - ./models:/app/models
     environment:
       - STREAMLIT_SERVER_PORT=8501
       - STREAMLIT_SERVER_ADDRESS=0.0.0.0
     restart: unless-stopped
+    depends_on:
+      - nexusrag-db
+
+  # NexusRAG API server
+  nexusrag-api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+    environment:
+      - FLASK_ENV=production
+    command: ["python", "-m", "nexusrag.cli", "serve", "--host", "0.0.0.0", "--port", "8000"]
+    restart: unless-stopped
+    depends_on:
+      - nexusrag-db
+
+  # Vector database (Chroma)
+  nexusrag-db:
+    image: chromadb/chroma:0.4.15
+    ports:
+      - "8005:8000"
+    volumes:
+      - ./chroma-data:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=TRUE
+    restart: unless-stopped
+
+  # Ollama for local LLM support
+  nexusrag-ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./ollama-data:/root/.ollama
+    restart: unless-stopped
+
+volumes:
+  chroma-data:
+  ollama-data:

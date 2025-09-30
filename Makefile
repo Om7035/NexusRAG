@@ -35,10 +35,38 @@ serve-docs:
 run-app:
 	streamlit run app.py
 
-# Create a test PDF
-create-test-pdf:
-	python scripts/create_test_pdf.py
+# Run the CLI application
+run-cli:
+	python -m nexusrag.cli
+
+# Start the API server
+run-api:
+	python -m nexusrag.cli serve
+
+# Run benchmarks
+benchmark:
+	python -m nexusrag.evaluation.benchmark
+
+# Run evaluation suite
+evaluate:
+	python scripts/evaluate.py
 
 # Run integration test
 integration-test:
 	python scripts/integration_test.py
+
+# Start Docker containers
+docker-up:
+	docker-compose up -d
+
+# Stop Docker containers
+docker-down:
+	docker-compose down
+
+# Build Docker images
+docker-build:
+	docker-compose build
+
+# Create a test PDF
+create-test-pdf:
+	python scripts/create_test_pdf.py

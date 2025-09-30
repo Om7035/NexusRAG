@@ -64,6 +64,17 @@ export GEMINI_API_KEY="your-google-ai-key"
 python examples/free_api_example.py
 ```
 
+## Quickstart Example (Coming Soon)
+
+The [quickstart.py](quickstart.py) script will provide a simple demonstration of NexusRAG's key features:
+
+- Easy initialization with default settings
+- Document processing
+- Question answering
+- Reasoning capabilities
+
+*Note: This example is temporarily disabled due to import issues.*
+
 ## Generation & Reasoning Example
 
 The [generation_reasoning_example.py](generation_reasoning_example.py) script demonstrates the enhanced generation and reasoning capabilities of NexusRAG:

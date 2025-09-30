@@ -3,9 +3,23 @@ from .parsers.base import BaseParser, Document
 from .embedders.base import BaseEmbedder
 from .vectorstores.base import BaseVectorStore
 from .llms.base import BaseLLM
-from .chunking import DocumentChunker
+from .chunking.document_chunker import DocumentChunker
 from .metadata_filter import MetadataFilter
-from .multimodal import MultimodalProcessor
+# Import MultimodalProcessor directly from multimodal.py to avoid circular imports
+import importlib.util
+import sys
+import os
+
+# Get the path to the multimodal.py file
+multimodal_path = os.path.join(os.path.dirname(__file__), 'multimodal.py')
+
+# Load the module
+spec = importlib.util.spec_from_file_location("multimodal", multimodal_path)
+multimodal_module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(multimodal_module)
+
+# Get the MultimodalProcessor class
+MultimodalProcessor = multimodal_module.MultimodalProcessor
 from .knowledge_graph import KnowledgeGraphBuilder, KnowledgeGraph
 from .agents.basic_agent import BasicAgent
 
