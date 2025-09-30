@@ -18,3 +18,7 @@ Pillow>=10.0.0
 pytesseract>=0.3.10
 google-generativeai>=0.3.0
 ollama>=0.1.0
+# Multimodal processing dependencies
+openai-whisper>=20231107  # For audio/video transcription
+pandas>=2.0.0  # For table processing
+numpy>=1.24.0  # For numerical operations

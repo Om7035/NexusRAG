@@ -64,6 +64,18 @@ export GEMINI_API_KEY="your-google-ai-key"
 python examples/free_api_example.py
 ```
 
+## Multimodal Processing Example (Coming Soon)
+
+The [multimodal_example.py](multimodal_example.py) script will demonstrate the enhanced multimodal processing capabilities of NexusRAG:
+
+- Image understanding & captioning (OCR fallback)
+- Audio/video transcription (with Whisper)
+- Table & chart comprehension
+- PDF with math/formula understanding (with Nougat)
+- Universal multimodal processing
+
+*Note: This example is temporarily disabled due to import issues.*
+
 ## Document Processing Example
 
 The [document_processing_example.py](document_processing_example.py) script demonstrates the enhanced document processing capabilities of NexusRAG:

@@ -1,5 +1,6 @@
 from typing import List, Dict, Any
 from .parsers.base import Document
+from .multimodal.universal import UniversalMultimodalProcessor
 
 
 class MultimodalProcessor:
@@ -7,60 +8,29 @@ class MultimodalProcessor:
     
     def __init__(self):
         """Initialize the multimodal processor."""
-        pass
+        self.processor = UniversalMultimodalProcessor()
     
     def process_image(self, image_path: str) -> Document:
-        """Process an image and extract text content.
+        """Process an image and extract content.
         
         Args:
             image_path (str): Path to the image file
             
         Returns:
-            Document: Document containing extracted text
+            Document: Document containing image content
         """
-        try:
-            from PIL import Image
-            import pytesseract
-        except ImportError:
-            raise ImportError(
-                "To process images, you need to install PIL and pytesseract. "
-                "Please run: pip install Pillow pytesseract"
-            )
-        
-        # Open and process image
-        image = Image.open(image_path)
-        text = pytesseract.image_to_string(image)
-        
-        # Create document
-        metadata = {
-            "source": image_path,
-            "content_type": "image",
-            "media_type": "image"
-        }
-        
-        return Document(content=text.strip(), metadata=metadata)
+        return self.processor.process_image(image_path)
     
     def process_table(self, table_data: List[List[str]]) -> Document:
-        """Process table data and convert to text.
+        """Process table data and convert to structured format.
         
         Args:
             table_data (List[List[str]]): 2D list representing table data
             
         Returns:
-            Document: Document containing table as text
+            Document: Document containing table as structured text
         """
-        # Convert table to text format
-        table_text = ""
-        for row in table_data:
-            table_text += "\t".join(str(cell) for cell in row) + "\n"
-        
-        # Create document
-        metadata = {
-            "content_type": "table",
-            "media_type": "text"
-        }
-        
-        return Document(content=table_text.strip(), metadata=metadata)
+        return self.processor.process_table_data(table_data)
     
     def process_multimodal_document(self, file_path: str) -> List[Document]:
         """Process a document that may contain multiple modalities.
@@ -71,30 +41,59 @@ class MultimodalProcessor:
         Returns:
             List[Document]: List of documents for each modality
         """
-        import os
+        return self.processor.process_file(file_path)
+    
+    def process_audio(self, audio_path: str) -> Document:
+        """Process an audio file and generate transcription.
         
-        # Get file extension
-        _, ext = os.path.splitext(file_path)
-        ext = ext.lower()
-        
-        documents = []
-        
-        # Process based on file type
-        if ext in ['.png', '.jpg', '.jpeg', '.gif', '.bmp']:
-            # Image file
-            doc = self.process_image(file_path)
-            documents.append(doc)
-        elif ext == '.pdf':
-            # PDF may contain images and text
-            # For now, we'll use the existing PDF parser
-            # In a more advanced implementation, we would extract images separately
-            from .parsers.pdf import PDFParser
-            parser = PDFParser()
-            documents = parser.parse(file_path)
-        else:
-            # For other file types, use appropriate parser
-            from .parsers.universal import UniversalParser
-            parser = UniversalParser()
-            documents = parser.parse(file_path)
+        Args:
+            audio_path (str): Path to the audio file
             
-        return documents
+        Returns:
+            Document: Document containing audio transcription
+        """
+        return self.processor.process_audio(audio_path)
+    
+    def process_video(self, video_path: str) -> Document:
+        """Process a video file and generate transcription.
+        
+        Args:
+            video_path (str): Path to the video file
+            
+        Returns:
+            Document: Document containing video transcription
+        """
+        return self.processor.process_video(video_path)
+    
+    def process_pdf(self, pdf_path: str) -> List[Document]:
+        """Process a PDF file with advanced capabilities.
+        
+        Args:
+            pdf_path (str): Path to the PDF file
+            
+        Returns:
+            List[Document]: List of documents containing PDF content
+        """
+        return self.processor.process_pdf(pdf_path)
+    
+    def process_html_table(self, html_content: str) -> Document:
+        """Process HTML table and convert to structured format.
+        
+        Args:
+            html_content (str): HTML content containing table
+            
+        Returns:
+            Document: Document containing table as structured text
+        """
+        return self.processor.process_html_table(html_content)
+    
+    def extract_tables_from_document(self, document_content: str) -> List[Document]:
+        """Extract tables from document content.
+        
+        Args:
+            document_content (str): Document content that may contain tables
+            
+        Returns:
+            List[Document]: List of documents containing extracted tables
+        """
+        return self.processor.extract_tables_from_document(document_content)
