@@ -1,7 +1,7 @@
 from typing import List
 import os
-from .base import BaseParser, Document
-from ..metadata.extractor import MetadataExtractor
+from nexusrag.parsers.base import BaseParser, Document
+from nexusrag.metadata.extractor import MetadataExtractor
 
 
 class UniversalParser(BaseParser):

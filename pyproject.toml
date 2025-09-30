@@ -54,6 +54,10 @@ dependencies = [
     # Generation and reasoning dependencies
     "lmql>=0.0.6",  # For constrained generation
     "vllm>=0.2.0",  # For high-performance inference
+    # CLI and runtime dependencies
+    "rich>=13.0.0",  # For CLI formatting
+    "deprecation>=2.1.0",  # For deprecation warnings
+    
 [project.optional-dependencies]
 test = [
     "pytest>=7.0",

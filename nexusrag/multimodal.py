@@ -1,6 +1,6 @@
 from typing import List, Dict, Any
-from .parsers.base import Document
-from .multimodal.universal import UniversalMultimodalProcessor
+from nexusrag.parsers.base import Document
+from nexusrag.multimodal.universal import UniversalMultimodalProcessor
 
 
 class MultimodalProcessor:

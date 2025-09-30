@@ -1,27 +1,12 @@
 from typing import List, Dict, Any, Optional
-from .parsers.base import BaseParser, Document
-from .embedders.base import BaseEmbedder
-from .vectorstores.base import BaseVectorStore
-from .llms.base import BaseLLM
-from .chunking.document_chunker import DocumentChunker
-from .metadata_filter import MetadataFilter
-# Import MultimodalProcessor directly from multimodal.py to avoid circular imports
-import importlib.util
-import sys
-import os
-
-# Get the path to the multimodal.py file
-multimodal_path = os.path.join(os.path.dirname(__file__), 'multimodal.py')
-
-# Load the module
-spec = importlib.util.spec_from_file_location("multimodal", multimodal_path)
-multimodal_module = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(multimodal_module)
-
-# Get the MultimodalProcessor class
-MultimodalProcessor = multimodal_module.MultimodalProcessor
-from .knowledge_graph import KnowledgeGraphBuilder, KnowledgeGraph
-from .agents.basic_agent import BasicAgent
+from nexusrag.parsers.base import BaseParser, Document
+from nexusrag.embedders.base import BaseEmbedder
+from nexusrag.vectorstores.base import BaseVectorStore
+from nexusrag.llms.base import BaseLLM
+from nexusrag.chunking.document_chunker import DocumentChunker
+from nexusrag.metadata_filter import MetadataFilter
+from nexusrag.knowledge_graph import KnowledgeGraphBuilder, KnowledgeGraph
+from nexusrag.agents.basic_agent import BasicAgent
 
 
 class EnhancedRAGPipeline:
@@ -48,6 +33,22 @@ class EnhancedRAGPipeline:
         self.embedder = embedder
         self.vector_store = vector_store
         self.llm = llm
+        
+        # Import MultimodalProcessor directly from multimodal.py to avoid circular imports
+        import importlib.util
+        import sys
+        import os
+        
+        # Get the path to the multimodal.py file
+        multimodal_path = os.path.join(os.path.dirname(__file__), 'multimodal.py')
+        
+        # Load the module
+        spec = importlib.util.spec_from_file_location("multimodal", multimodal_path)
+        multimodal_module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(multimodal_module)
+        
+        # Get the MultimodalProcessor class
+        MultimodalProcessor = multimodal_module.MultimodalProcessor
         
         # Initialize enhanced components
         self.chunker = DocumentChunker(chunk_size, chunk_overlap)

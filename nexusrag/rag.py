@@ -1,9 +1,8 @@
 from typing import List, Dict, Any, Optional
-from .enhanced_pipeline import EnhancedRAGPipeline
-from .parsers.universal import UniversalParser
-from .embedders.universal import UniversalEmbedder
-from .vectorstores.universal import UniversalVectorStore
-from .llms.universal import UniversalLLM
+from nexusrag.parsers.universal import UniversalParser
+from nexusrag.embedders.universal import UniversalEmbedder
+from nexusrag.vectorstores.universal import UniversalVectorStore
+from nexusrag.llms.universal import UniversalLLM
 
 
 class RAG:
@@ -24,6 +23,9 @@ class RAG:
             chunk_size (int): Chunk size for document processing
             chunk_overlap (int): Chunk overlap for document processing
         """
+        # Import EnhancedRAGPipeline here to avoid circular imports
+        from .enhanced_pipeline import EnhancedRAGPipeline
+        
         # Initialize components
         parser = UniversalParser()
         embedder_obj = UniversalEmbedder(provider=embedder)

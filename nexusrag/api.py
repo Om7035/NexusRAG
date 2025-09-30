@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from typing import List, Dict, Any
 import os
 import tempfile
-from .rag import RAG
+from nexusrag.rag import RAG
 
 
 def create_app():

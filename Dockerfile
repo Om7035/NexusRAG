@@ -1,29 +1,40 @@
-# Use a Python base image
-FROM python:3.11-slim
+# Builder stage
+FROM python:3.11-slim AS builder
 
-# Set working directory
 WORKDIR /app
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y \
-    gcc \
-    g++ \
+RUN apt-get update && \
+    apt-get install -y \
+    build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy project files
-COPY pyproject.toml setup.cfg README.md ./
-COPY nexusrag ./nexusrag
-COPY app.py ./
-COPY requirements.txt ./
+# Copy requirements
+COPY requirements.txt .
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Install dependencies
+RUN pip install --no-cache-dir --user -r requirements.txt
 
-# Create directories for data and models
-RUN mkdir -p /app/data /app/models
+# Final stage
+FROM python:3.11-slim
 
-# Expose ports
-EXPOSE 8501 8000
+# Install runtime dependencies
+RUN apt-get update && \
+    apt-get install -y \
+    poppler-utils \
+    tesseract-ocr \
+    && rm -rf /var/lib/apt/lists/*
 
-# Command to run when the container starts
-CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+WORKDIR /app
+
+# Copy installed dependencies
+COPY --from=builder /root/.local /root/.local
+
+# Copy application
+COPY . .
+
+# Set PATH
+ENV PATH=/root/.local/bin:$PATH
+
+# API service
+CMD ["python", "-m", "nexusrag.api"]

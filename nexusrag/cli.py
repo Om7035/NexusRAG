@@ -109,7 +109,7 @@ def main():
     if args.command == "serve":
         # Import here to avoid dependency issues
         try:
-            from .api import create_app
+            from nexusrag.api import create_app
             app = create_app()
             print(f"Starting NexusRAG API server on {args.host}:{args.port}")
             app.run(host=args.host, port=args.port, debug=False)

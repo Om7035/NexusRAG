@@ -13,7 +13,15 @@ import sys
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
-from nexusrag import RAG
+# Import RAG after setting up the path
+try:
+    from nexusrag import RAG
+except ImportError as e:
+    print(f"Import error: {e}")
+    print("Attempting to import RAG directly...")
+    import sys
+    sys.path.append(str(Path(__file__).parent.parent / "nexusrag"))
+    from nexusrag import RAG
 
 
 def create_sample_documents():
