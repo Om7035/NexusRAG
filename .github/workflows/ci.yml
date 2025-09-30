@@ -28,4 +28,8 @@ jobs:
         
     - name: Run tests
       run: |
+<<<<<<< HEAD
         python -m pytest tests/ -v
+=======
+        python -m pytest tests/ -v
+>>>>>>> a64f8bfb72b38c763c008ce6da276b6660a24dc6
