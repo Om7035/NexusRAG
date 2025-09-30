@@ -64,6 +64,21 @@ export GEMINI_API_KEY="your-google-ai-key"
 python examples/free_api_example.py
 ```
 
+## Retrieval Engine Example
+
+The [retrieval_example.py](retrieval_example.py) script demonstrates the enhanced retrieval engine capabilities of NexusRAG:
+
+- Hybrid search (vector + keyword)
+- Re-ranking for precision
+- Cross-modal retrieval
+- Multimodal fusion search
+
+To run this example:
+
+```bash
+python examples/retrieval_example.py
+```
+
 ## Multimodal Processing Example (Coming Soon)
 
 The [multimodal_example.py](multimodal_example.py) script will demonstrate the enhanced multimodal processing capabilities of NexusRAG:

@@ -24,6 +24,9 @@ class UniversalVectorStore(BaseVectorStore):
         elif self.provider == "weaviate":
             from .weaviate import WeaviateVectorStore
             self.vector_store = WeaviateVectorStore(**kwargs)
+        elif self.provider == "qdrant":
+            from .qdrant import QdrantVectorStore
+            self.vector_store = QdrantVectorStore(**kwargs)
         else:
             raise ValueError(f"Unsupported provider: {provider}")
     

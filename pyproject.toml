@@ -41,18 +41,19 @@ dependencies = [
     "anthropic>=0.18.0",
     "Pillow>=10.0.0",
     "pytesseract>=0.3.10",
-    "google-generativeai>=0.3.0",
     "ollama>=0.1.0",
     # Multimodal processing dependencies
     "openai-whisper>=20231107",  # For audio/video transcription
     "pandas>=2.0.0",  # For table processing
     "numpy>=1.24.0",  # For numerical operations
+    # Retrieval engine dependencies
+    "qdrant-client>=1.9.0",  # For Qdrant vector database
+    "bm25s>=0.1.0",  # For BM25 keyword search
 ]
 
 [project.optional-dependencies]
 test = [
     "pytest>=7.0",
-    "pytest-cov>=4.0",
 ]
 dev = [
     "black>=23.0",
