@@ -96,7 +96,11 @@ class WeaviateVectorStore(BaseVectorStore):
         )
         
         # Extract documents from results
-        if "data" in results and "Get" in results["data"] and self.class_name in results["data"]["Get"]:
+        if (
+            "data" in results and
+            "Get" in results["data"] and
+            self.class_name in results["data"]["Get"]
+        ):
             documents = results["data"]["Get"][self.class_name]
             
             # Format results
