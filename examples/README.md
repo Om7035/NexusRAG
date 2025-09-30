@@ -64,6 +64,21 @@ export GEMINI_API_KEY="your-google-ai-key"
 python examples/free_api_example.py
 ```
 
+## Document Processing Example
+
+The [document_processing_example.py](document_processing_example.py) script demonstrates the enhanced document processing capabilities of NexusRAG:
+
+- Universal file parsing (text, PDF, images, audio, video)
+- Advanced PDF parsing with layout analysis
+- Smart chunking strategies (character, semantic, sentence)
+- Comprehensive metadata extraction
+
+To run this example:
+
+```bash
+python examples/document_processing_example.py
+```
+
 ## Comprehensive Example
 
 The [comprehensive_example.py](comprehensive_example.py) script demonstrates all advanced features of NexusRAG:

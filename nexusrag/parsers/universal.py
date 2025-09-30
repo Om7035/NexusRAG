@@ -1,6 +1,7 @@
 from typing import List
 import os
 from .base import BaseParser, Document
+from ..metadata.extractor import MetadataExtractor
 
 
 class UniversalParser(BaseParser):
@@ -35,10 +36,27 @@ class UniversalParser(BaseParser):
         elif ext == '.txt':
             from .text import TextParser
             parser = TextParser()
+        elif ext in ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff']:
+            from .image import ImageParser
+            parser = ImageParser()
+        elif ext in ['.mp3', '.wav', '.flac', '.aac', '.ogg']:
+            from .audio import AudioParser
+            parser = AudioParser()
+        elif ext in ['.mp4', '.avi', '.mov', '.mkv', '.wmv', '.flv']:
+            from .video import VideoParser
+            parser = VideoParser()
         else:
             # Default to text parser for unknown formats
             from .text import TextParser
             parser = TextParser()
             
         # Parse the document
-        return parser.parse(file_path)
+        documents = parser.parse(file_path)
+        
+        # Enhance metadata for all documents
+        enhanced_documents = []
+        for doc in documents:
+            enhanced_doc = MetadataExtractor.enhance_document_metadata(doc, file_path)
+            enhanced_documents.append(enhanced_doc)
+        
+        return enhanced_documents

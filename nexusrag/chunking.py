@@ -1,6 +1,11 @@
 from typing import List
 from .parsers.base import Document
 
+# Import chunkers directly from their modules to avoid circular imports
+from .chunking.universal import UniversalChunker
+from .chunking.semantic import SemanticChunker
+from .chunking.sentence import SentenceChunker
+
 
 class DocumentChunker:
     """Document chunking utility for splitting documents into smaller pieces."""

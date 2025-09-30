@@ -1,6 +1,7 @@
 from typing import List
 from .base import BaseParser, Document
 import fitz  # PyMuPDF
+from ..metadata.extractor import MetadataExtractor
 
 
 class AdvancedPDFParser(BaseParser):
@@ -69,4 +70,11 @@ class AdvancedPDFParser(BaseParser):
                     documents.append(document)
         
         pdf_document.close()
-        return documents
+        
+        # Enhance metadata for all documents
+        enhanced_documents = []
+        for doc in documents:
+            enhanced_doc = MetadataExtractor.enhance_document_metadata(doc, file_path)
+            enhanced_documents.append(enhanced_doc)
+        
+        return enhanced_documents
