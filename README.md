@@ -11,7 +11,7 @@ NexusRAG is an open-source framework for building autonomous AI agents that reas
 - **Multiple Providers**: Support for OpenAI, Cohere, Pinecone, Weaviate, Anthropic, Google Gemini, and more
 - **Free API Support**: Built-in support for free APIs like Google Gemini
 - **Local LLM Support**: Built-in support for local LLMs via Ollama
-- **Knowledge Graph**: Entity extraction and relationship mapping (future enhancement)
+- **Knowledge Graph**: Entity extraction and relationship mapping
 - **Advanced Features**: Document chunking, metadata filtering, and multimodal processing
 
 ## Architecture
@@ -40,7 +40,7 @@ These components are orchestrated by the **Pipeline**, which provides a unified 
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/NexusRAG.git
+git clone https://github.com/Om7035/NexusRAG.git
 cd NexusRAG
 ```
 
@@ -48,7 +48,10 @@ cd NexusRAG
 
 ```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+# On Windows:
+venv\Scripts\activate
+# On macOS/Linux:
+source venv/bin/activate
 ```
 
 3. Install the package in development mode:
